@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Heavy HTML Test</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: Arial;
+}
+
+/* Heavy animation */
+.box {
+    width: 100px;
+    height: 100px;
+    background: red;
+    margin: 5px;
+    animation: spin 0.2s infinite linear;
+    float: left;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Heavy HTML Rendering Test</h1>
+
+<!-- Massive DOM elements -->
+<div>
+<!-- COPY-PASTE BLOCK START -->
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<!-- COPY-PASTE BLOCK END -->
+</div>
+
+<!-- Repeat this block many times -->
+<div>
+<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
+<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
+</div>
+
+<div>
+<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
+<div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div>
+</div>
+
+<!-- Keep copying boxes to increase load -->
+
+</body>
+</html>
